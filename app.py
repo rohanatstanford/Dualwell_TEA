@@ -46,7 +46,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["captured_and_stored_mtpa"],
             step=0.01,
             format="%.2f",
-            help="Amount permanently sequestered",
+            help="Basis for project sizing - assumes constant CO2 supply rate (base case: 0.2 Mtpa)",
         )
         percent_sequestered_pct = st.number_input(
             "Injection CO2 % sequestered",
@@ -55,7 +55,7 @@ with st.form("tea_inputs"):
             value=1.0,
             step=0.1,
             format="%.1f",
-            help="% of injected CO2 that is sequestered",
+            help="% of injected CO2 that is sequestered/lost to subsurface (base case: 1%)",
         )
         percent_sequestered = percent_sequestered_pct / 100
         co2_water_ratio = st.number_input(
@@ -76,6 +76,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["sco2_capex_m"],
             step=5.0,
             format="%.1f",
+            help="Aboveground capex for conversion of sCO2 heat to power (base case: $70M)",
         )
         geo_capex_per_well_m = st.number_input(
             "Subsurface capex per well ($M)",
@@ -84,6 +85,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["geo_capex_per_well_m"],
             step=1.0,
             format="%.1f",
+            help="Subsurface capex per well for drilling, completion, and infrastructure (base case comes from GEOPHIRES Fervo Cape Station project: $10M)",
         )
         cost_of_capital_pct = st.number_input(
             "Cost of capital (%)",
@@ -112,6 +114,7 @@ with st.form("tea_inputs"):
             value=19.0,
             step=0.5,
             format="%.1f",
+            help="Amount of heat extracted from geothermal reservoir converted to power (base case: 19%)",
         )
         thermal_efficiency = thermal_efficiency_pct / 100
         thermal_extraction_mwt_kgs = st.number_input(
@@ -120,7 +123,8 @@ with st.form("tea_inputs"):
             max_value=2.0,
             value=round(DEFAULTS["thermal_extraction_mwt_kgs"], 4),
             step=0.01,
-            format="%.4f",
+            format="%.4f",  
+            help="Amount of thermal energy extracted from geothermal reservoir per unit of steam flow (base case: 0.71 MWt/(kg/s) vs 0.59 for Fervo Cape Station project)",
         )
         annual_opex_m = st.number_input(
             "Annual opex ($M/year)",
@@ -129,6 +133,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["annual_opex_m"],
             step=5.0,
             format="%.1f",
+            help="Annual operating expenses for geothermal and sCO2 systems (base case: $30M/year)",
         )
         carbon_price_above_45q = st.number_input(
             "Carbon price above 45Q ($/tonne)",
@@ -137,6 +142,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["carbon_price_above_45q"],
             step=5.0,
             format="%.1f",
+            help="Carbon price for CO2 sequestration credits (base case: $40/tonne)",
         )
         co2_cost_per_tonne = st.number_input(
             "CO2 cost ($/tonne)",
@@ -145,6 +151,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["co2_cost_per_tonne"],
             step=10.0,
             format="%.1f",
+            help="Cost of CO2 procurement, assumed to be via carbon capture from anthropogenic sources (base case: $100/tonne)",
         )
 
     submitted = st.form_submit_button("Calculate")
