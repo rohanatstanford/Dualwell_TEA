@@ -70,7 +70,7 @@ with st.form("tea_inputs"):
     with c2:
         st.markdown("**Financial**")
         sco2_capex_m = st.number_input(
-            "sCO2 Capex ($M)",
+            "Aboveground Capex ($M)",
             min_value=10.0,
             max_value=500.0,
             value=DEFAULTS["sco2_capex_m"],
@@ -78,7 +78,7 @@ with st.form("tea_inputs"):
             format="%.1f",
         )
         geo_capex_per_well_m = st.number_input(
-            "Geothermal capex per well ($M)",
+            "Subsurface capex per well ($M)",
             min_value=1.0,
             max_value=50.0,
             value=DEFAULTS["geo_capex_per_well_m"],
