@@ -28,7 +28,7 @@ DEFAULTS = {
     "co2_cost_per_tonne": 100.0,
     "tax_credit_45q": 85.0,
     "power_value_usd_mwh": 80.0,
-    "above_ground_capex_base_m": 1.275257, # $1,275,257 per MW
+    "above_ground_capex_base_m": 1275257, # $1,275,257 per MW
     "reference_power_mwe": 87.1,
     "drilling_cost_per_well_m": 4.0,
     "stimulation_cost_per_well_m": 4.0,
@@ -174,12 +174,12 @@ with st.form("tea_inputs"):
         st.markdown("**Capex & O&M**")
         above_ground_capex_base_m = st.number_input(
             "Above-ground capex  ($M)",
-            min_value=50.0,
-            max_value=200.0,
+            min_value=0,
+            max_value=3000000.0,
             value=DEFAULTS["above_ground_capex_base_m"],
-            step=5.0,
+            step=100000.0,
             format="%.1f",
-            help="Power plant and above-ground capex (base case from NREL sCO2 cycle + contingency: $111.1M)",
+            help="Power plant and above-ground capex (base case from NREL sCO2 cycle + contingency: $1.275M/MW)",
         )
         drilling_cost_per_well_m = st.number_input(
             "Drilling cost per well ($M)",
