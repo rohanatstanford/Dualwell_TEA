@@ -56,7 +56,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["captured_and_stored_mtpa"],
             step=0.01,
             format="%.2f",
-            help="Amount of CO2 permanently sequestered per year",
+            help="Basis for project sizing - assumes constant CO2 supply rate (base case: 0.2 Mtpa)",
         )
         percent_sequestered_pct = st.number_input(
             "Injection CO2 % sequestered",
@@ -65,7 +65,7 @@ with st.form("tea_inputs"):
             value=1.0,
             step=0.1,
             format="%.1f",
-            help="% of injected CO2 that is sequestered (base case: 1%)",
+            help="% of injected CO2 that is sequestered/lost to subsurface (base case: 1%)",
         )
         percent_sequestered = percent_sequestered_pct / 100
         max_injection_rate_per_well = st.number_input(
@@ -83,7 +83,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["thermal_extraction_mwt_kgs"],
             step=0.01,
             format="%.3f",
-            help="Heat extracted per unit flow from reservoir",
+            help="Heat extracted per unit mass flow from reservoir (base case: 0.71 MWt/(kg/s))",
         )
         thermal_efficiency_pct = st.number_input(
             "Thermal efficiency (%)",
@@ -92,6 +92,7 @@ with st.form("tea_inputs"):
             value=18.0,
             step=0.5,
             format="%.1f",
+            help="Amount of heat extracted from geothermal reservoir converted to power (base case: 18%)",
         )
         thermal_efficiency = thermal_efficiency_pct / 100
         capacity_factor = st.number_input(
@@ -122,6 +123,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["project_life_years"],
             step=1,
             format="%d",
+            help="Project lifetime in years (base case: 15 years)",
         )
         capex_escalation_factor = st.number_input(
             "Capex escalation factor",
@@ -156,6 +158,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["carbon_price_above_45q"],
             step=5.0,
             format="%.1f",
+            help="Carbon price for CO2 sequestration credits (base case: $40/tonne)",
         )
         co2_cost_per_tonne = st.number_input(
             "CO2 procurement cost ($/tonne)",
@@ -164,26 +167,19 @@ with st.form("tea_inputs"):
             value=DEFAULTS["co2_cost_per_tonne"],
             step=10.0,
             format="%.1f",
+            help="Cost of CO2 procurement, assumed to be via carbon capture from anthropogenic sources (base case: $100/tonne)",
         )
 
     with c3:
         st.markdown("**Capex & O&M**")
         above_ground_capex_base_m = st.number_input(
-            "Above-ground capex base ($M)",
+            "Above-ground capex  ($M)",
             min_value=50.0,
             max_value=200.0,
             value=DEFAULTS["above_ground_capex_base_m"],
             step=5.0,
             format="%.1f",
-            help="NREL sCO2 cycle + contingency for reference power",
-        )
-        reference_power_mwe = st.number_input(
-            "Reference power for scaling (MWe)",
-            min_value=50.0,
-            max_value=150.0,
-            value=DEFAULTS["reference_power_mwe"],
-            step=5.0,
-            format="%.1f",
+            help="Power plant and above-ground capex (base case from NREL sCO2 cycle + contingency: $111.1M)",
         )
         drilling_cost_per_well_m = st.number_input(
             "Drilling cost per well ($M)",
@@ -192,6 +188,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["drilling_cost_per_well_m"],
             step=0.5,
             format="%.1f",
+            help="Subsurface capex per well for drilling, completion, and infrastructure (base case comes from GEOPHIRES Fervo Cape Station project: $4M)",
         )
         stimulation_cost_per_well_m = st.number_input(
             "Stimulation cost per well ($M)",
@@ -200,6 +197,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["stimulation_cost_per_well_m"],
             step=0.5,
             format="%.1f",
+            help="Subsurface capex per well for stimulation (base case comes from GEOPHIRES Fervo Cape Station project: $4M)",
         )
         exploration_cost_m = st.number_input(
             "Exploration cost ($M)",
@@ -208,6 +206,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["exploration_cost_m"],
             step=5.0,
             format="%.1f",
+            help="Subsurface capex for exploration and development (base case comes from GEOPHIRES Fervo Cape Station project: $30M)",
         )
         annual_salaries_m = st.number_input(
             "Annual salaries ($M)",
@@ -216,6 +215,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["annual_salaries_m"],
             step=0.1,
             format="%.1f",
+            help="Annual salaries for project operations (base case: 10 employees @ $150k/year = $1.5M)",
         )
         maintenance_per_well_m = st.number_input(
             "Maintenance per well ($M/yr)",
@@ -224,6 +224,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["maintenance_per_well_m"],
             step=0.01,
             format="%.2f",
+            help="Maintenance cost per well per year (base case comes from GEOPHIRES Fervo Cape Station project: $0.04M/well/year)",
         )
         opex_per_mw_m = st.number_input(
             "Power plant opex per MW ($M/yr)",
@@ -232,6 +233,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["opex_per_mw_m"],
             step=0.01,
             format="%.2f",
+            help="Power plant operating expenses per MW of installed capacity per year (base case comes from GEOPHIRES Fervo Cape Station project: $0.04M/MW/year)",
         )
         redrilling_per_well_m = st.number_input(
             "Redrilling cost per well ($M/yr)",
@@ -240,9 +242,11 @@ with st.form("tea_inputs"):
             value=DEFAULTS["redrilling_per_well_m"],
             step=0.05,
             format="%.2f",
+            help="Redrilling cost per well per year (base case comes from GEOPHIRES Fervo Cape Station project: $0.855M/well/year)",
         )
 
     tax_credit_45q = DEFAULTS["tax_credit_45q"]
+    reference_power_mwe = DEFAULTS["reference_power_mwe"]  # Fixed for above-ground scaling
 
     submitted = st.form_submit_button("Calculate")
 
