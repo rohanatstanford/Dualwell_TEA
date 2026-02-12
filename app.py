@@ -178,7 +178,7 @@ with st.form("tea_inputs"):
             max_value=3.0,
             value=DEFAULTS["above_ground_capex_base_m"],
             step=0.5,
-            format="%.1f",
+            format="%.4f",
             help="Power plant and above-ground capex (base case from NREL sCO2 cycle + contingency: $1.275M/MW)",
         )
         drilling_cost_per_well_m = st.number_input(
