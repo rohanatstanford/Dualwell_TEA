@@ -173,7 +173,7 @@ with st.form("tea_inputs"):
     with c3:
         st.markdown("**Capex & O&M**")
         above_ground_capex_base_m = st.number_input(
-            "Above-ground capex  ($M)",
+            "Above-ground capex per MW ($M/MW)",
             min_value=0.0,
             max_value=3.0,
             value=DEFAULTS["above_ground_capex_base_m"],
