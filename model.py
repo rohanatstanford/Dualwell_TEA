@@ -56,7 +56,7 @@ def technoeconomics_analysis(
     # 3. Capex
     above_ground_m = (
         above_ground_capex_base_m
-        * (power_generated_mw / reference_power_mwe)
+        * (power_generated_mw)
         * capex_escalation_factor
     )
     well_cost_m = (drilling_cost_per_well_m + stimulation_cost_per_well_m) * total_wells
