@@ -317,7 +317,7 @@ if submitted:
 
         with st.expander("Design Summary"):
             st.write(f"**Power:** {metrics['power_generated_mw']:.2f} MWe | **Energy:** {metrics['annual_energy_mwh']:,.0f} MWh/yr")
-            st.write(f"**Wells:** {metrics['total_wells']} total | **Capex:** {metrics['total_capex_m']:,.1f} M (Above-ground: {metrics['above_ground_capex_base_m']:,.1f} M, Subsurface: ${metrics['subsurface_m']:,.1f} M)")
+            st.write(f"**Wells:** {metrics['total_wells']} total | **Capex:** {metrics['total_capex_m']:,.1f} M (Above-ground: {metrics['above_ground_m']:,.1f} M, Subsurface: ${metrics['subsurface_m']:,.1f} M)")
 
     except Exception as e:
         st.error(f"Error running model: {e}")
