@@ -7,7 +7,7 @@ import pandas as pd
 from model import technoeconomics_analysis
 
 st.set_page_config(page_title="TEA Model", page_icon="⚡", layout="wide")
-st.title("⚡ DualWell Technoeconomic Analysis")
+st.title("⚡ Dualwell Technoeconomic Analysis")
 st.markdown("*11 Feb 2026*")
 st.divider()
 
@@ -153,6 +153,15 @@ with st.form("tea_inputs"):
             format="%.1f",
             help="Cost of CO2 procurement, assumed to be via carbon capture from anthropogenic sources (base case: $100/tonne)",
         )
+        operating_life_years = st.number_input(
+            "Project lifetime (years)",
+            min_value=5,
+            max_value=50,
+            value=DEFAULTS["operating_life_years"],
+            step=1,
+            format="%d",
+            help="Number of years the project operates (base case: 15)",
+        )
 
     submitted = st.form_submit_button("Calculate")
 
@@ -171,7 +180,7 @@ if submitted:
             annual_opex_m=annual_opex_m,
             carbon_price_above_45q=carbon_price_above_45q,
             co2_cost_per_tonne=co2_cost_per_tonne,
-            operating_life_years=DEFAULTS["operating_life_years"],
+            operating_life_years=operating_life_years,
             tax_credit_duration_years=DEFAULTS["tax_credit_duration_years"],
         )
 
@@ -189,6 +198,7 @@ if submitted:
             "Annual opex ($M/year)": annual_opex_m,
             "Carbon price above 45Q ($/tonne)": carbon_price_above_45q,
             "CO2 cost ($/tonne)": co2_cost_per_tonne,
+            "Project lifetime (years)": operating_life_years,
             "LCOE ($/MWh)": metrics["LCOE"],
             "NPV ($M)": metrics["NPV"],
             "IRR (%)": metrics["IRR"] * 100 if metrics["IRR"] is not None else None,

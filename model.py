@@ -19,7 +19,7 @@ def technoeconomics_analysis(
     annual_opex_m: float,
     carbon_price_above_45q: float,
     co2_cost_per_tonne: float,
-    operating_life_years: int = 15,
+    operating_life_years: int = 15,  # Project lifetime in years
     tax_credit_duration_years: int = 12,
     capacity_factor: float = 1.0,
 ) -> dict:
