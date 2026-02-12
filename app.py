@@ -28,7 +28,7 @@ DEFAULTS = {
     "co2_cost_per_tonne": 100.0,
     "tax_credit_45q": 85.0,
     "power_value_usd_mwh": 80.0,
-    "above_ground_capex_base_m": 111.1,
+    "above_ground_capex_base_m": 1.275257, # $1,275,257 per MW
     "reference_power_mwe": 87.1,
     "drilling_cost_per_well_m": 4.0,
     "stimulation_cost_per_well_m": 4.0,
