@@ -27,10 +27,10 @@ DEFAULTS = {
     "carbon_price_above_45q": 40.0,
     "co2_cost_per_tonne": 100.0,
     "tax_credit_45q": 85.0,
-    "power_value_usd_mwh": 80.0,
-    "above_ground_capex_base_m": 1.275257, # $1,275,257 per MW
+    "power_value_usd_mwh": 85.0,
+    "above_ground_capex_base_m": 1.27525746, # $1,275,257 per MW
     "reference_power_mwe": 87.1,
-    "drilling_cost_per_well_m": 4.0,
+    "drilling_cost_per_well_m": 8.0,
     "stimulation_cost_per_well_m": 4.0,
     "exploration_cost_m": 30.0,
     "annual_salaries_m": 1.5,
@@ -188,7 +188,7 @@ with st.form("tea_inputs"):
             value=DEFAULTS["drilling_cost_per_well_m"],
             step=0.5,
             format="%.1f",
-            help="Subsurface capex per well for drilling, completion, and infrastructure (base case comes from GEOPHIRES Fervo Cape Station project: $4M)",
+            help="Subsurface capex per well for drilling, completion, and infrastructure (base case from 260211 Technoeconomics.xlsx: $8M)",
         )
         stimulation_cost_per_well_m = st.number_input(
             "Stimulation cost per well ($M)",
