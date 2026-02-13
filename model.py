@@ -36,7 +36,7 @@ def technoeconomics_analysis(
     opex_per_mw_m: float,
     redrilling_per_well_m: float,
 ) -> dict:
-    """Run TEA and return LCOE, NPV, IRR, Payback (post-tax)."""
+    """Run TEA and return post-tax + pre-tax metrics."""
     hours = 8760 * capacity_factor
     total_years = START_OPERATIONS_YEAR + project_life_years
     years = np.arange(total_years)
@@ -103,21 +103,23 @@ def technoeconomics_analysis(
     # Tax: negative taxable -> positive tax_cash (credit received)
     tax_cash = -tax_rate * taxable_income
 
-    # Post-tax cash flow
-    net_cash_flow = (
+    # Pre-tax and post-tax cash flow
+    pre_tax_cash_flow = (
         capex_flows
         + revenue_elec
         + revenue_45q
         + revenue_carbon
         + opex_flows
         + co2_cost_flows
-        + tax_cash
     )
+    net_cash_flow = pre_tax_cash_flow + tax_cash
 
     discount_factors = 1 / ((1 + cost_of_capital) ** years)
     discounted_cf = net_cash_flow * discount_factors
+    pre_tax_discounted_cf = pre_tax_cash_flow * discount_factors
 
     npv = discounted_cf.sum()
+    pre_tax_npv = pre_tax_discounted_cf.sum()
     cumulative = np.cumsum(net_cash_flow)
     payback = next((i for i, x in enumerate(cumulative) if x >= 0), None)
 
@@ -128,7 +130,11 @@ def technoeconomics_analysis(
     discounted_gen = np.sum(generation_flows * discount_factors)
     npv_elec = np.sum(revenue_elec * discount_factors)
     npv_non_elec = npv - npv_elec
+    pre_tax_npv_non_elec = pre_tax_npv - npv_elec
     lcoe = (-npv_non_elec * 1e6) / discounted_gen if discounted_gen > 0 else 0.0
+    lcoe_pre_tax = (
+        (-pre_tax_npv_non_elec * 1e6) / discounted_gen if discounted_gen > 0 else 0.0
+    )
 
     irr = None
     try:
@@ -138,6 +144,8 @@ def technoeconomics_analysis(
 
     return {
         "LCOE": lcoe,
+        "LCOE_pre_tax": lcoe_pre_tax,
+        "LCOE_post_tax": lcoe,
         "NPV": npv,
         "IRR": irr,
         "Payback": payback,

@@ -294,7 +294,8 @@ if submitted:
             "Above-ground capex ($M)": above_ground_capex_base_m,
             "Drilling cost ($M/well)": drilling_cost_per_well_m,
             "Stimulation cost ($M/well)": stimulation_cost_per_well_m,
-            "LCOE ($/MWh)": metrics["LCOE"],
+            "Post-tax LCOE ($/MWh)": metrics["LCOE"],
+            "Pre-tax LCOE ($/MWh)": metrics["LCOE_pre_tax"],
             "NPV ($M)": metrics["NPV"],
             "IRR (%)": metrics["IRR"] * 100 if metrics["IRR"] is not None else None,
             "Payback (years)": metrics["Payback"],
@@ -303,15 +304,17 @@ if submitted:
 
         st.divider()
         st.subheader("Results")
-        r1, r2, r3, r4 = st.columns(4)
+        r1, r2, r3, r4, r5 = st.columns(5)
         with r1:
-            st.metric("LCOE", f"${metrics['LCOE']:,.2f}", "/MWh")
+            st.metric("Post-tax LCOE", f"${metrics['LCOE']:,.2f}", "/MWh")
         with r2:
-            st.metric("Post-tax NPV", f"${metrics['NPV']:,.2f} M", "Million USD")
+            st.metric("Pre-tax LCOE", f"${metrics['LCOE_pre_tax']:,.2f}", "/MWh")
         with r3:
+            st.metric("Post-tax NPV", f"${metrics['NPV']:,.2f} M", "Million USD")
+        with r4:
             irr_str = f"{metrics['IRR']:.2%}" if metrics["IRR"] is not None else "N/A"
             st.metric("IRR", irr_str, "")
-        with r4:
+        with r5:
             payback_str = f"{metrics['Payback']} yrs" if metrics["Payback"] is not None else "N/A"
             st.metric("Payback", payback_str, "")
 
