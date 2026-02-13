@@ -279,6 +279,7 @@ if submitted:
         )
 
         # Append run to history
+        pre_tax_lcoe = metrics.get("LCOE_pre_tax")
         run_data = {
             "CO2 sequestered (Mtpa)": captured_and_stored_mtpa,
             "Injection CO2 % sequestered": percent_sequestered_pct,
@@ -295,7 +296,7 @@ if submitted:
             "Drilling cost ($M/well)": drilling_cost_per_well_m,
             "Stimulation cost ($M/well)": stimulation_cost_per_well_m,
             "Post-tax LCOE ($/MWh)": metrics["LCOE"],
-            "Pre-tax LCOE ($/MWh)": metrics["LCOE_pre_tax"],
+            "Pre-tax LCOE ($/MWh)": pre_tax_lcoe,
             "NPV ($M)": metrics["NPV"],
             "IRR (%)": metrics["IRR"] * 100 if metrics["IRR"] is not None else None,
             "Payback (years)": metrics["Payback"],
@@ -308,7 +309,10 @@ if submitted:
         with r1:
             st.metric("Post-tax LCOE", f"${metrics['LCOE']:,.2f}", "/MWh")
         with r2:
-            st.metric("Pre-tax LCOE", f"${metrics['LCOE_pre_tax']:,.2f}", "/MWh")
+            pre_tax_lcoe_str = (
+                f"${pre_tax_lcoe:,.2f}" if pre_tax_lcoe is not None else "N/A"
+            )
+            st.metric("Pre-tax LCOE", pre_tax_lcoe_str, "/MWh")
         with r3:
             st.metric("Post-tax NPV", f"${metrics['NPV']:,.2f} M", "Million USD")
         with r4:
