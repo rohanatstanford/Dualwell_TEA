@@ -175,7 +175,7 @@ with st.form("tea_inputs"):
         above_ground_capex_base_m = st.number_input(
             "Above-ground capex per MW ($M/MW)",
             min_value=0.0,
-            max_value=3.0,
+            max_value=5.0,
             value=DEFAULTS["above_ground_capex_base_m"],
             step=0.5,
             format="%.4f",
@@ -184,7 +184,7 @@ with st.form("tea_inputs"):
         drilling_cost_per_well_m = st.number_input(
             "Drilling cost per well ($M)",
             min_value=1.0,
-            max_value=10.0,
+            max_value=20.0,
             value=DEFAULTS["drilling_cost_per_well_m"],
             step=0.5,
             format="%.1f",
@@ -211,7 +211,7 @@ with st.form("tea_inputs"):
         annual_salaries_m = st.number_input(
             "Annual salaries ($M)",
             min_value=0.5,
-            max_value=5.0,
+            max_value=100.0,
             value=DEFAULTS["annual_salaries_m"],
             step=0.1,
             format="%.1f",
@@ -220,7 +220,7 @@ with st.form("tea_inputs"):
         maintenance_per_well_m = st.number_input(
             "Maintenance per well ($M/yr)",
             min_value=0.01,
-            max_value=0.1,
+            max_value=2.0,
             value=DEFAULTS["maintenance_per_well_m"],
             step=0.01,
             format="%.2f",
@@ -229,7 +229,7 @@ with st.form("tea_inputs"):
         opex_per_mw_m = st.number_input(
             "Power plant opex per MW ($M/yr)",
             min_value=0.01,
-            max_value=0.1,
+            max_value=2.0,
             value=DEFAULTS["opex_per_mw_m"],
             step=0.01,
             format="%.2f",
@@ -238,7 +238,7 @@ with st.form("tea_inputs"):
         redrilling_per_well_m = st.number_input(
             "Redrilling cost per well ($M/yr)",
             min_value=0.3,
-            max_value=2.0,
+            max_value=10.0,
             value=DEFAULTS["redrilling_per_well_m"],
             step=0.05,
             format="%.2f",
